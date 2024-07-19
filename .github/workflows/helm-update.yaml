@@ -10,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2        
-
       - name: Install updatecli
         run: |
           curl -LO https://github.com/updatecli/updatecli/releases/download/v0.80.0/updatecli_Linux_x86_64.tar.gz
@@ -20,7 +17,7 @@ jobs:
           mv updatecli /usr/local/bin
           export GITHUB_TOKEN=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
 
-          
+
       - name: Run updatecli
         run: |
             updatecli apply --config updatecli.d/updatecli.yaml
