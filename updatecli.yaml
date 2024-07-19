@@ -1,0 +1,146 @@
+helm-chart-common-source: &helm_defaults
+  kind: helmchart
+  pattern: "*"
+  spec:
+    version: latest
+
+sources:
+  chart-cluster-autoscaler:
+    <<: *helm_defaults
+    spec:
+      name: cluster-autoscaler
+      url: https://kubernetes.github.io/autoscaler
+
+  chart-ingress-nginx:
+    <<: *helm_defaults
+    spec:
+      name: ingress-nginx
+      url: https://kubernetes.github.io/ingress-nginx
+
+  chart-metrics-server:
+    <<: *helm_defaults
+    spec:
+      name: metrics-server
+      url: https://kubernetes-sigs.github.io/metrics-server
+
+  chart-aws-efs-csi-driver:
+    <<: *helm_defaults
+    spec:
+      name: aws-efs-csi-driver
+      url: https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+
+  chart-aws-load-balancer-controller:
+    <<: *helm_defaults
+    spec:
+      name: aws-load-balancer-controller
+      url: https://aws.github.io/eks-charts
+
+  chart-cert-manager:
+    <<: *helm_defaults
+    spec:
+      name: cert-manager
+      url: https://charts.jetstack.io
+
+  chart-datadog-crds:
+    <<: *helm_defaults
+    spec:
+      name: datadog-crds
+      url: https://helm.datadoghq.com
+
+  chart-datadog:
+    <<: *helm_defaults
+    spec:
+      name: datadog
+      url: https://helm.datadoghq.com
+
+conditions: {}
+
+targets:
+  chart-cluster-autoscaler:
+    name: Update cluster-autoscaler version in input.tf
+    kind: terraform/file
+    sourceid: chart-cluster-autoscaler
+    spec:
+      file: templates/eks/input.tf
+      path: variable.CLUSTER_AUTOSCALER_HELM_CHART_VERSION.default
+
+  chart-ingress-nginx:
+    name: Update ingress-nginx version in input.tf
+    kind: terraform/file
+    sourceid: chart-ingress-nginx
+    spec:
+      file: templates/eks/input.tf
+      path: variable.NGINX_CHART_VERSION.default
+
+  chart-metrics-server:
+    name: Update metrics-server version in input.tf
+    kind: terraform/file
+    sourceid: chart-metrics-server
+    spec:
+      file: templates/eks/input.tf
+      path: variable.METRICS_SERVER_VERSION.default
+
+  chart-aws-efs-csi-driver:
+    name: Update aws-efs-csi-driver version in input.tf
+    kind: terraform/file
+    sourceid: chart-aws-efs-csi-driver
+    spec:
+      file: templates/eks/input.tf
+      path: variable.EFS_DRIVER_CHART_VERSION.default
+
+  chart-aws-load-balancer-controller:
+    name: Update aws-load-balancer-controller version in input.tf
+    kind: terraform/file
+    sourceid: chart-aws-load-balancer-controller
+    spec:
+      file: templates/eks/input.tf
+      path: variable.AWS_LOAD_BALANCER_CONTROLLER_VERSION.default
+
+  chart-cert-manager:
+    name: Update cert-manager version in input.tf
+    kind: terraform/file
+    sourceid: chart-cert-manager
+    spec:
+      file: templates/eks/input.tf
+      path: variable.CERTMANAGER_VERSION.default
+
+  chart-datadog-crds:
+    name: Update datadog-crds version in input.tf
+    kind: terraform/file
+    sourceid: chart-datadog-crds
+    spec:
+      file: templates/eks/input.tf
+      path: variable.DATADOG_CRDS_VERSION.default
+
+  chart-datadog:
+    name: Update datadog version in input.tf
+    kind: terraform/file
+    sourceid: chart-datadog
+    spec:
+      file: templates/eks/input.tf
+      path: variable.DATADOG_VERSION.default
+
+
+scms:
+  chart-cluster-autoscaler:
+    kind: "github"
+    spec:
+      user: "aughade"
+      email: "akashughade77@gmail.com"
+      owner: "akash911133"
+      repository: updatecli-PR
+      token: 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
+      username: 'aughade'
+      branch: "main"
+
+actions:
+  chart-cluster-autoscaler:
+    kind: "github/pullrequest"
+    scmid: "chart-cluster-autoscaler"
+    spec:
+      automerge: false
+      description: "Updating the input.tf file versions Multiple Times "
+      draft: false
+      labels:
+        - "dependencies"
+      title: "Updating the input.tf file versions"
