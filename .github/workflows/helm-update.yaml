@@ -17,12 +17,13 @@ jobs:
           mv updatecli /usr/local/bin
           export GITHUB_TOKEN=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
           ls
+          pwd
 
 
       - name: Run updatecli
         run: |
             ls
-            apt-install tree -y
+            apt-get install tree -y
             tree
             updatecli apply --config updatecli.d/updatecli.yaml
       - name: Run updatecli
