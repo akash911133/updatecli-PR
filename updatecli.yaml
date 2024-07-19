@@ -1,0 +1,46 @@
+actions:
+  default:
+    kind: "github/pullrequest"
+    scmid: default
+    spec:
+      automerge: false
+      description: "Updating the input.tf file versions Multiple Times "
+      draft: false
+      title: "Updating the input.tf file versions"
+
+scms:
+  default:
+    kind: "github"
+    spec:
+      user: "aughade"
+      email: "akashughade77@gmail.com"
+      owner: "akash911133"
+      repository: updatecli-PR
+      token: "{{ .github.token }}"
+      username: 'aughade'
+      branch: "main"
+
+
+helm-chart-common-source: &helm_defaults
+  kind: helmchart
+  pattern: "*"
+  spec:
+    version: latest
+
+sources:
+  chart-cluster-autoscaler:
+    <<: *helm_defaults
+    spec:
+      name: cluster-autoscaler
+      url: https://kubernetes.github.io/autoscaler
+
+
+targets:
+  chart-cluster-autoscaler:
+    name: Update cluster-autoscaler version in input.tf
+    kind: terraform/file
+    sourceid: chart-cluster-autoscaler
+    scmid: default
+    spec:
+      file: templates/eks/input.tf
+      path: variable.CLUSTER_AUTOSCALER_HELM_CHART_VERSION.default
