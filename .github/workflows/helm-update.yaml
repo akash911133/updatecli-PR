@@ -23,6 +23,7 @@ jobs:
 
       - name: Run updatecli
         run: |
+            cd ..
             sudo ls
             sudo apt-get install tree -y
             sudo tree
