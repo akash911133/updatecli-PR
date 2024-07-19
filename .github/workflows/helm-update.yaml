@@ -26,7 +26,6 @@ jobs:
 
       - name: Run updatecli
         run: |
-            sudo cd ..
             sudo pwd
             sudo whereis .github/
             sudo ls
