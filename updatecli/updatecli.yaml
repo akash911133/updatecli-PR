@@ -1,0 +1,44 @@
+name: "bump updatecli version"
+pipelineid: "updatecli"
+
+actions:
+  default:
+    kind: "github/pullrequest"
+    scmid: default
+    spec:
+      automerge: false
+      description: "Updating the input.tf file versions Multiple Times "
+      draft: false
+      title: "Updating the akash input.tf file versions"
+      parent: true
+scms:
+  default:
+    kind: "github"
+    spec:
+      user: "akash911133"
+      email: "akashughade77@gmail.com"
+      owner: "akash911133"
+      repository: "updatecli-PR"
+      token: '{{ .github/values.yaml  }}'
+      username: 'akash911133'
+      branch: "main"
+
+sources:
+  chart-cluster-autoscaler:
+    kind: helmchart
+    pattern: "*"
+    spec:
+      name: cluster-autoscaler
+      url: https://kubernetes.github.io/autoscaler
+      version: latest
+
+
+targets:
+  chart-cluster-autoscaler:
+    name: Update cluster-autoscaler version in input.tf
+    kind: terraform/file
+    sourceid: chart-cluster-autoscaler
+    scmid: default
+    spec:
+      file: templates/eks/input.tf
+      path: variable.CLUSTER_AUTOSCALER_HELM_CHART_VERSION.default
