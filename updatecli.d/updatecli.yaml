@@ -1,3 +1,6 @@
+name: "bump updatecli version"
+pipelineid: "updatecli"
+
 actions:
   default:
     kind: "github/pullrequest"
@@ -6,33 +9,28 @@ actions:
       automerge: false
       description: "Updating the input.tf file versions Multiple Times "
       draft: false
-      title: "Updating the input.tf file versions"
-
+      title: "Updating the akash input.tf file versions"
+      parent: true
 scms:
   default:
     kind: "github"
     spec:
-      user: "aughade"
+      user: "akash911133"
       email: "akashughade77@gmail.com"
       owner: "akash911133"
-      repository: updatecli-PR
-      token: "{{ .github.token }}"
-      username: 'aughade'
+      repository: "updatecli-PR"
+      token: '{{ requiredEnv "GITHUB_TOKEN"  }}'
+      username: 'akash911133'
       branch: "main"
-
-
-helm-chart-common-source: &helm_defaults
-  kind: helmchart
-  pattern: "*"
-  spec:
-    version: latest
 
 sources:
   chart-cluster-autoscaler:
-    <<: *helm_defaults
+    kind: helmchart
+    pattern: "*"
     spec:
       name: cluster-autoscaler
       url: https://kubernetes.github.io/autoscaler
+      version: latest
 
 
 targets:
