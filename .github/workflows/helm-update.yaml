@@ -23,9 +23,9 @@ jobs:
 
       - name: Run updatecli
         run: |
-            cd ..
-            pwd
-            whereis .github/
+            sudo cd ..
+            sudo pwd
+            sudo whereis .github/
             sudo ls
             sudo apt-get install tree -y
             sudo tree
