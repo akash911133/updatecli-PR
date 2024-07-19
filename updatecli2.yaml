@@ -1,0 +1,63 @@
+baseHelmChart: &baseHelm
+  kind: helmchart
+  pattern: "*"
+  spec:
+    version: latest
+
+scms:
+  default:
+    kind: github
+    spec:
+      user: jayantverma11
+      owner: jayantverma11
+      repository: test-helmchart
+      token: '{{ requiredEnv "TOKEN" }}'
+      username: jayantverma11
+      branch: main
+
+sources:
+  chart-cluster-autoscaler:
+    <<: *baseHelm
+    spec:
+      name: cluster-autoscaler
+      url: https://kubernetes.github.io/autoscaler
+
+conditions: {}
+
+targets:
+  chart-cluster-autoscaler:
+    name: Update cluster-autoscaler version in input.tf
+    kind: terraform/file
+    sourceid: chart-cluster-autoscaler
+    spec:
+      file: templates/eks/inputs.tf
+      path: variable.cluster-autoscaler.default
+
+actions:
+  default:
+    title: Open a GitHub pull request with new helm chart version
+    kind: github/pullrequest
+    scmid: default
+    target:
+      - chart-cluster-autoscaler
+    spec:
+      automerge: false
+      mergemethod: squash
+      
+
+actions:
+  default:
+    title: Open a GitHub pull request with new helm chart version
+    kind: github/pullrequest
+    spec:
+      automerge: false
+      mergemethod: squash
+      branch: update-chart-version
+      description: This pull request updates the Helm chart version for cluster-autoscaler.
+      target:
+        - chart-cluster-autoscaler
+      
+
+
+
+
