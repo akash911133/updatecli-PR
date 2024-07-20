@@ -18,19 +18,15 @@ jobs:
 
       - name: Install updatecli
         run: |
-          curl -LO https://github.com/updatecli/updatecli/releases/download/v0.80.0/updatecli_Linux_x86_64.tar.gz
-          tar -zxvf updatecli_Linux_x86_64.tar.gz
-          mv updatecli /usr/local/bin
-          updatecli version
+          sudo curl -LO https://github.com/updatecli/updatecli/releases/download/v0.80.0/updatecli_Linux_x86_64.tar.gz
+          sudo tar -zxvf updatecli_Linux_x86_64.tar.gz
+          sudo mv updatecli /usr/local/bin
+          sudo updatecli version
 
 
       - name: Run updatecli
         run: |
             sudo pwd
-            sudo whereis .github/
-            sudo ls
-            sudo apt-get install tree -y
-            sudo tree
             sudo updatecli apply --config updatecli.d/updatecli.yaml
       - name: Run updatecli
         run: |
