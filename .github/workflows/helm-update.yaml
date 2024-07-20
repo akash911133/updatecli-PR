@@ -19,7 +19,7 @@ jobs:
       - name: Install updatecli 1
         run: |
           sudo apt-get update -y
-          sudo /etc/os-release
+          sudo cat /etc/os-release
           sudo uname
           sudo curl -LO https://github.com/updatecli/updatecli/releases/download/v0.80.0/updatecli_Linux_x86_64.tar.gz
       
