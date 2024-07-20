@@ -15,12 +15,12 @@ scms:
   default:
     kind: "github"
     spec:
-      user: "akash911133"
+      user: "aughade"
       email: "akashughade77@gmail.com"
       owner: "akash911133"
       repository: "updatecli-PR"
       token: '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'
-      username: 'akash911133'
+      username: 'aughade'
       branch: "main"
 
 sources:
