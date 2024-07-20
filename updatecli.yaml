@@ -19,7 +19,7 @@ scms:
       email: "akashughade77@gmail.com"
       owner: "akash911133"
       repository: "updatecli-PR"
-      token: '{{ .github/values.yaml  }}'
+      token: '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'
       username: 'akash911133'
       branch: "main"
 
