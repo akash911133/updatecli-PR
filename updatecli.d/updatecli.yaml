@@ -36,9 +36,9 @@ sources:
 targets:
   chart-cluster-autoscaler:
     name: Update cluster-autoscaler version in input.tf
-    kind: templates/eks/input.tf
+    kind: terraform/file
     sourceid: chart-cluster-autoscaler
     scmid: default
     spec:
-      file: templates/eks/input.tf
+      file: ../templates/eks/input.tf
       path: variable.CLUSTER_AUTOSCALER_HELM_CHART_VERSION.default
