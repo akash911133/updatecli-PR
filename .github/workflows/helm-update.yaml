@@ -43,7 +43,7 @@ jobs:
       - name: Run updatecli
         run: |
             sudo pwd
-            sudo updatecli apply --config updatecli.d/updatecli.yaml
+            sudo updatecli apply --config updatecli.d/updatecli.yaml  --values .github/values.yaml
       - name: Run updatecli
         run: |
             sudo updatecli apply --config updatecli.yaml --values .github/values.yaml          
