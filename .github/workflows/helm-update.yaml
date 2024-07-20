@@ -39,10 +39,10 @@ jobs:
           sudo updatecli version
 
 
-      # - name: Run updatecli
-      #   run: |
-      #       sudo pwd
-      #       sudo updatecli apply --config updatecli.d/updatecli.yaml
       - name: Run updatecli
         run: |
-            sudo updatecli apply --config updatecli/updatecli.yaml --values .github/values.yaml          
+            sudo pwd
+            sudo updatecli apply --config updatecli.d/updatecli.yaml
+      - name: Run updatecli
+        run: |
+            sudo updatecli apply --config updatecli.yaml --values .github/values.yaml          
