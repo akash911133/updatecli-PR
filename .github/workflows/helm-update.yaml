@@ -20,15 +20,17 @@ jobs:
         run: |
           sudo apt-get update -y
           sudo curl -LO https://github.com/updatecli/updatecli/releases/download/v0.80.0/updatecli_Linux_x86_64.tar.gz
-                - name: Install updatecli
+      
       - name: Install updatecli 2
         run: |
           sudo tar -zxvf updatecli_Linux_x86_64.tar.gz
-                - name: Install updatecli
+
+                
       - name: Install updatecli 3
         run: |
           sudo mv updatecli /usr/local/bin
-                - name: Install updatecli
+
+                
       - name: Install updatecli 4
         run: |
           sudo updatecli version
