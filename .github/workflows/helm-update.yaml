@@ -16,18 +16,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Install updatecli
+      - name: Install updatecli 1
         run: |
           sudo curl -LO https://github.com/updatecli/updatecli/releases/download/v0.80.0/updatecli_Linux_x86_64.tar.gz
+                - name: Install updatecli
+      - name: Install updatecli 2
+        run: |
           sudo tar -zxvf updatecli_Linux_x86_64.tar.gz
+                - name: Install updatecli
+      - name: Install updatecli 3
+        run: |
           sudo mv updatecli /usr/local/bin
+                - name: Install updatecli
+      - name: Install updatecli 4
+        run: |
           sudo updatecli version
 
 
-      - name: Run updatecli
-        run: |
-            sudo pwd
-            sudo updatecli apply --config updatecli.d/updatecli.yaml
+      # - name: Run updatecli
+      #   run: |
+      #       sudo pwd
+      #       sudo updatecli apply --config updatecli.d/updatecli.yaml
       - name: Run updatecli
         run: |
             sudo updatecli apply --config updatecli/updatecli.yaml --values .github/values.yaml          
