@@ -8,13 +8,19 @@ on:
 env:
     GITHUB_TOKEN: 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
 
+permissions: {}
+
 jobs:
   update-helm-charts:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
+
+      - name: "Setup updatecli"
+        uses: "updatecli/updatecli-action@v2"
 
       - name: Install updatecli 1
         run: |
