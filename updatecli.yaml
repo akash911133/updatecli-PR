@@ -1,44 +1,168 @@
-name: "bump updatecli version"
-pipelineid: "updatecli"
+baseHelmChart: &baseHelm
+  kind: helmchart
+  pattern: "*"
+  spec:
+    version: latest
 
-actions:
-  default:
-    kind: "github/pullrequest"
-    scmid: default
-    spec:
-      automerge: false
-      description: "Updating the input.tf file versions Multiple Times "
-      draft: false
-      title: "Updating the akash input.tf file versions"
-      parent: true
 scms:
-  default:
+  setupgitscm:
     kind: "github"
     spec:
       user: "akash911133"
-      email: "akashughade77@gmail.com"
       owner: "akash911133"
       repository: "updatecli-PR"
-      token: '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'
-      username: 'akash911133'
+      token: ""
+      username: "akash911133"
       branch: "main"
+      target:
+      commitmessage:
+        type: "NCP "
 
 sources:
-  chart-cluster-autoscaler:
-    kind: helmchart
-    pattern: "*"
+  chartclusterautoscalersource:
+    <<: *baseHelm
     spec:
       name: cluster-autoscaler
       url: https://kubernetes.github.io/autoscaler
-      version: latest
 
+  chartaws-efs-csi-driversource:
+    <<: *baseHelm
+    spec:
+      name: aws-efs-csi-driver
+      url: https://kubernetes-sigs.github.io/aws-efs-csi-driver
+
+  chartmetrics-serversource:
+    <<: *baseHelm
+    spec:
+      name: metrics-server
+      url: https://kubernetes-sigs.github.io/metrics-server
+
+  chartingress-nginxsource:
+    <<: *baseHelm
+    spec:
+      name: ingress-nginx
+      url: https://kubernetes.github.io/ingress-nginx
+
+  chartaws-load-balancer-controllersource:
+    <<: *baseHelm
+    spec:
+      name: aws-load-balancer-controller
+      url: https://aws.github.io/eks-charts
+
+  chartcertmanagersource:
+    <<: *baseHelm
+    spec:
+      name: cert-manager
+      url: https://charts.jetstack.io
+
+  chartdatadogcrdssource:
+    <<: *baseHelm
+    spec:
+      name: datadog-crds
+      url: https://helm.datadoghq.com
+      
+  chartdatadogsource:
+    <<: *baseHelm
+    spec:
+      name: datadog
+      url: https://helm.datadoghq.com
+
+actions:
+  action-tag:
+    kind: "github/pullrequest"
+    scmid: setupgitscm
+    target:
+      - chartclusterautoscalertarget
+      - chartaws-efs-csi-drivertarget
+      - chartmetrics-servertarget
+      - chartingress-nginxtarget
+      - chartaws-load-balancer-controllertarget
+      - chartcertmanagertarget
+      - chartdatadogcrdstarget
+      - chartdatadogtarget
+    spec:
+      automerge: false
+      description: "Creating a pull request 1"
+      draft: true
+      title: "Update git_repo_scanner helm chart version"
 
 targets:
-  chart-cluster-autoscaler:
-    name: Update cluster-autoscaler version in input.tf
+##  cluster auto scaler ##
+  chartclusterautoscalertarget:
+    name: Update cluster-autoscaler version in input.tf  latest version updated ${{ .source.chartclusterautoscalersource.version }}
+    scmid: setupgitscm
     kind: terraform/file
-    sourceid: chart-cluster-autoscaler
-    scmid: default
+    sourceid: chartclusterautoscalersource
     spec:
       file: templates/eks/input.tf
       path: variable.CLUSTER_AUTOSCALER_HELM_CHART_VERSION.default
+
+##  aws-efs-csi-driver  ###
+  chartaws-efs-csi-drivertarget:
+    name: Update aws-efs-csi-driver version in input.tf  
+    scmid: setupgitscm
+    kind: terraform/file
+    sourceid: chartaws-efs-csi-driversource
+    spec:
+      file: templates/eks/input.tf
+      path: variable.EFS_DRIVER_CHART_VERSION.default
+
+##  metrics-server  ###
+  chartmetrics-servertarget:
+    name: Update metrics-server version in input.tf
+    scmid: setupgitscm
+    kind: terraform/file
+    sourceid: chartmetrics-serversource
+    spec:
+      file: templates/eks/input.tf
+      path: variable.METRICS_SERVER_VERSION.default
+
+##  ingress-nginx  ###
+  chartingress-nginxtarget:
+    name: Update ingress-nginx version in input.tf
+    scmid: setupgitscm
+    kind: terraform/file
+    sourceid: chartingress-nginxsource
+    spec:
+      file: templates/eks/input.tf
+      path: variable.NGINX_CHART_VERSION.default
+
+##  aws-load-balancer-controller  ###
+  chartaws-load-balancer-controllertarget:
+    name: Update aws-load-balancer-controller version in input.tf
+    scmid: setupgitscm
+    kind: terraform/file
+    sourceid: chartaws-load-balancer-controllersource
+    spec:
+      file: templates/eks/input.tf
+      path: variable.AWS_LOAD_BALANCER_CONTROLLER_VERSION.default
+
+##  cert-manager  ###
+  chartcertmanagertarget:
+    name: Update cert-manager version in input.tf
+    scmid: setupgitscm
+    kind: terraform/file
+    sourceid: chartcertmanagersource
+    spec:
+      file: templates/eks/input.tf
+      path: variable.CERTMANAGER_VERSION.default
+
+### datadog-crds ###
+  chartdatadogcrdstarget:
+    name: Update datadog-crds version in input.tf
+    scmid: setupgitscm
+    kind: terraform/file
+    sourceid: chartdatadogcrdssource
+    spec:
+      file: templates/eks/input.tf
+      path: variable.DATADOG_CRDS_VERSION.default
+
+##  datadog ##
+  chartdatadogtarget:
+    name: Update datadog version in input.tf
+    scmid: setupgitscm
+    kind: terraform/file
+    sourceid: chartdatadogsource
+    spec:
+      file: templates/eks/input.tf
+      path: variable.DATADOG_VERSION.default
