@@ -1,6 +1,6 @@
 variable "AWS_LOAD_BALANCER_CONTROLLER_VERSION" {
   type    = string
-  default = "1.5.5"
+  default = "1.8.1"
 }
 
 variable "CLUSTER_AUTOSCALER_HELM_CHART_VERSION" {
