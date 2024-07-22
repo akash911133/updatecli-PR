@@ -1,27 +1,36 @@
-name: "bump updatecli version"
-pipelineid: "updatecli"
+# updatecli.yaml
+name: Update a file content and open a GitHub Pull Request
+scms:
+  default:
+    kind: "github"
+    id: default
+    spec:
+      user: "Akash Ughade"
+      email: "akashughade77@gmail.com"
+      owner: "akash911133"
+      repository: "updatecli-PR"
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_AUTHOR" }}'
+      branch: "main"
+      commitmessage:
+        type: "feat"
+        title: "Updating version of helm chart"
+        body: "updated latest version in data.yaml"
+        hidecredit: true
 
 actions:
   default:
     kind: "github/pullrequest"
     scmid: default
+    target: 
+      - chart-cluster-autoscaler
     spec:
       automerge: false
-      description: "Updating the input.tf file versions Multiple Times "
-      draft: false
-      title: "Updating the akash input.tf file versions"
-      parent: true
-scms:
-  default:
-    kind: "github"
-    spec:
-      user: "aughade"
-      email: "akashughade77@gmail.com"
-      owner: "akash911133"
-      repository: "updatecli-PR"
-      token: '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'
-      username: 'aughade'
-      branch: "main"
+      description: "Creating a pull request 1"
+      draft: true
+      labels: 
+        - "Dependencies"
+      title: "Update git_repo_scanner helm chart version"
 
 sources:
   chart-cluster-autoscaler:
@@ -31,7 +40,6 @@ sources:
       name: cluster-autoscaler
       url: https://kubernetes.github.io/autoscaler
       version: latest
-
 
 targets:
   chart-cluster-autoscaler:
