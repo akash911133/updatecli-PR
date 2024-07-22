@@ -9,8 +9,8 @@ scms:
       email: "akashughade77@gmail.com"
       owner: "akash911133"
       repository: "updatecli-PR"
-      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
-      username: '{{ requiredEnv "GITHUB_AUTHOR" }}'
+      token: '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'
+      username: 'akash911133'
       branch: "main"
       commitmessage:
         type: "feat"
