@@ -30,7 +30,7 @@ variable "CERTMANAGER_VERSION" {
 
 variable "DATADOG_CRDS_VERSION" {
   type    = string
-  default = "0.4.7"
+  default = "1.7.0"
 }
 
 variable "DATADOG_VERSION" {
