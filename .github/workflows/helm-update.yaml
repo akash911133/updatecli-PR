@@ -17,14 +17,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install updatecli
-        run: |
-          sudo apt-get update -y
-          sudo curl -LO https://github.com/updatecli/updatecli/releases/download/v0.80.0/updatecli_Linux_x86_64.tar.gz
-          sudo tar -zxvf updatecli_Linux_x86_64.tar.gz
-          sudo mv updatecli /usr/local/bin
-          updatecli version
+      - name: Install Updatecli in the runner
+        uses: updatecli/updatecli-action@v2
 
       - name: Run updatecli
         run: |
-          updatecli apply --config updatecli.d/updatecli.yaml --debug
+          updatecli apply --config updatecli.d
+        env:
+          # Using the default GitHub Token means we have 1000 api requests per hour
+          UPDATECLI_GITHUB_ACTOR: ${{ github.actor }}
+          UPDATECLI_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
