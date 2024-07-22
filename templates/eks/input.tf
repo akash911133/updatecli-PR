@@ -25,7 +25,7 @@ variable "METRICS_SERVER_VERSION" {
 
 variable "CERTMANAGER_VERSION" {
   type    = string
-  default = "v1.10.0"
+  default = "v1.15.1"
 }
 
 variable "DATADOG_CRDS_VERSION" {
