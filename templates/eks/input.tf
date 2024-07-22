@@ -35,5 +35,5 @@ variable "DATADOG_CRDS_VERSION" {
 
 variable "DATADOG_VERSION" {
   type    = string
-  default = "3.1.11"
+  default = "3.68.2"
 }
