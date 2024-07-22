@@ -1,14 +1,17 @@
 name: Update Helm Charts
 
-on: 
+on:
+  release:
+  workflow_dispatch:
   push:
-    branches:
-      - main  # Specify the branches you want this workflow to run on push
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions: {}
 
 env:
     GITHUB_TOKEN: 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
-
-permissions: {}
 
 jobs:
   update-helm-charts:
@@ -16,39 +19,37 @@ jobs:
 
     steps:
       steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v4"
+        - name: "Checkout"
+          uses: "actions/checkout@v4"
 
-      - name: "Setup updatecli"
-        uses: "updatecli/updatecli-action@v2"
-
-      - name: Install updatecli 1
-        run: |
-          sudo apt-get update -y
-          sudo cat /etc/os-release
-          sudo uname
-          sudo curl -LO https://github.com/updatecli/updatecli/releases/download/v0.80.0/updatecli_Linux_x86_64.tar.gz
-          ls -ltra
+        - name: "Install updatecli 1"
+          run: |
+            sudo apt-get update -y
+            sudo cat /etc/os-release
+            sudo uname
+            sudo curl -LO https://github.com/updatecli/updatecli/releases/download/v0.80.0/updatecli_Linux_x86_64.tar.gz
+            ls -ltra
       
-      - name: Install updatecli 2
-        run: |
-          sudo tar -zxvf updatecli_Linux_x86_64.tar.gz
+        - name: Install updatecli 2
+          run: |
+            sudo tar -zxvf updatecli_Linux_x86_64.tar.gz
 
                 
-      - name: Install updatecli 3
-        run: |
-          sudo mv updatecli /usr/local/bin
+        - name: Install updatecli 3
+          run: |
+            sudo mv updatecli /usr/local/bin
 
                 
-      - name: Install updatecli 4
-        run: |
-          sudo updatecli version
+        - name: Install updatecli 4
+          run: |
+            sudo updatecli version
 
 
-      - name: Run updatecli
-        run: |
-            sudo pwd
-            sudo updatecli apply --config updatecli.d/updatecli.yaml  --values .github/values.yaml
-      - name: Run updatecli
-        run: |
-            sudo updatecli apply --config updatecli.yaml --values .github/values.yaml          
+        - name: Run updatecli
+          run: |
+              sudo pwd
+              sudo updatecli apply --config updatecli.d/updatecli.yaml  --values .github/values.yaml
+
+        - name: Run updatecli
+          run: |
+              sudo updatecli apply --config updatecli.yaml --values .github/values.yaml          
