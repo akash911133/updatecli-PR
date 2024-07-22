@@ -15,7 +15,7 @@ variable "EFS_DRIVER_CHART_VERSION" {
 
 variable "NGINX_CHART_VERSION" {
   type    = string
-  default = "4.3.0"
+  default = "4.11.1"
 }
 
 variable "METRICS_SERVER_VERSION" {
