@@ -27,4 +27,4 @@ jobs:
 
       - name: Run updatecli
         run: |
-          updatecli apply --config updatecli.d/updatecli.yaml 
+          updatecli apply --config updatecli.d/updatecli.yaml --debug
