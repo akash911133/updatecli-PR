@@ -10,7 +10,7 @@ variable "CLUSTER_AUTOSCALER_HELM_CHART_VERSION" {
 
 variable "EFS_DRIVER_CHART_VERSION" {
   type    = string
-  default = "2.2.9"
+  default = "3.0.6"
 }
 
 variable "NGINX_CHART_VERSION" {
