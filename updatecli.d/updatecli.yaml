@@ -1,52 +1,47 @@
 # updatecli.yaml
-name: Update a file content and open a GitHub Pull Request
+name: "deps: update cluster-autoscaler version in input.tf"
 scms:
   default:
     kind: "github"
-    id: default
     spec:
       user: "Akash Ughade"
       email: "akashughade77@gmail.com"
       owner: "akash911133"
       repository: "updatecli-PR"
-      token: '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'
-      username: 'akash911133'
+      token: '{{ requiredEnv "UPDATECLI_GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "UPDATECLI_GITHUB_ACTOR" }}'
       branch: "main"
       commitmessage:
-        type: "feat"
-        title: "Updating version of helm chart"
-        body: "updated latest version in data.yaml"
         hidecredit: true
 
 actions:
   default:
     kind: "github/pullrequest"
-    scmid: default
-    target: 
-      - chart-cluster-autoscaler
+    scmid: "default"
     spec:
       automerge: false
-      description: "Creating a pull request 1"
       draft: true
       labels: 
-        - "Dependencies"
+        - "dependencies"
       title: "Update git_repo_scanner helm chart version"
 
 sources:
   chart-cluster-autoscaler:
-    kind: helmchart
-    pattern: "*"
+    name: "Get the latest version of cluster-autoscaler helm chart"
+    kind: "helmchart"
     spec:
-      name: cluster-autoscaler
-      url: https://kubernetes.github.io/autoscaler
-      version: latest
+      name: "cluster-autoscaler"
+      url: "https://kubernetes.github.io/autoscaler"
+      versionfilter:
+        kind: "semver"
+        pattern: "*"
 
 targets:
   chart-cluster-autoscaler:
-    name: Update cluster-autoscaler version in input.tf
-    kind: terraform/file
-    sourceid: chart-cluster-autoscaler
-    scmid: default
+    name: 'deps: update cluster-autoscaler version in input.tf to {{ source "chart-cluster-autoscaler" }}'
+    kind: "terraform/file"
+    sourceid: "chart-cluster-autoscaler"
+    scmid: "default"
     spec:
-      file: ../templates/eks/input.tf
-      path: variable.CLUSTER_AUTOSCALER_HELM_CHART_VERSION.default
+      file: "templates/eks/input.tf"
+      path: "variable.CLUSTER_AUTOSCALER_HELM_CHART_VERSION.default"
