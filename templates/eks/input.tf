@@ -5,7 +5,7 @@ variable "AWS_LOAD_BALANCER_CONTROLLER_VERSION" {
 
 variable "CLUSTER_AUTOSCALER_HELM_CHART_VERSION" {
   type    = string
-  default = "9.21.0"
+  default = "9.37.0"
 }
 
 variable "EFS_DRIVER_CHART_VERSION" {
